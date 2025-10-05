@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Moment Connect - Documentation Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .doc-section {
+            display: none;
+        }
+        .doc-section.active {
+            display: block;
+        }
+        .nav-item {
+            transition: all 0.3s ease-in-out;
+        }
+        .nav-item:hover {
+            transform: translateX(4px);
+        }
+        .nav-item.active {
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+            color: white;
+        }
+        .content-fade {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .toc-item {
+            transition: all 0.2s ease-in-out;
+        }
+        .toc-item:hover {
+            background-color: #F3F4F6;
+            padding-left: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg border-b-4 border-blue-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">MC</span>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">The Moment Connect</h1>
+                        <p class="text-lg text-gray-600">Documentation Suite</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm text-gray-600">Last Updated:</div>
+                    <div class="text-sm font-semibold text-blue-600" id="current-date"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex gap-8">
+            <!-- Navigation Sidebar -->
+            <div class="w-80 bg-white rounded-xl shadow-lg p-6 h-fit sticky top-8">
+                <h2 class="text-xl font-bold text-gray-900 mb-6">📚 Documentation</h2>
+                
+                <nav class="space-y-2">
+                    <div class="nav-item active p-4 rounded-lg cursor-pointer" onclick="showSection('terms')">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <span class="text-blue-600 text-sm">📋</span>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Terms of Service</div>
+                                <div class="text-xs text-gray-500">Legal framework & obligations</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-item p-4 rounded-lg cursor-pointer" onclick="showSection('privacy')">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <span class="text-green-600 text-sm">🔒</span>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Privacy Policy</div>
+                                <div class="text-xs text-gray-500">HIPAA compliance & data protection</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-item p-4 rounded-lg cursor-pointer" onclick="showSection('handbook')">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <span class="text-purple-600 text-sm">📖</span>
+                            </div>
+                            <div>
+                                <div class="font-semibold">User Handbook</div>
+                                <div class="text-xs text-gray-500">Complete system usage guide</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-item p-4 rounded-lg cursor-pointer" onclick="showSection('training')">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                                <span class="text-orange-600 text-sm">🎓</span>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Training Documentation</div>
+                                <div class="text-xs text-gray-500">Step-by-step training materials</div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Quick Search -->
+                <div class="mt-8 pt-6 border-t border-gray-200">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Quick Search</label>
+                    <input type="text" id="search-input" placeholder="Search documentation..." 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           onkeyup="searchContent()">
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="flex-1">
+                <!-- Terms of Service -->
+                <div id="terms-section" class="doc-section active content-fade">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <div class="border-b border-gray-200 pb-6 mb-8">
+                            <h1 class="text-3xl font-bold text-gray-900 mb-2">📋 Terms of Service</h1>
+                            <p class="text-gray-600">Legal framework and user obligations for The Moment Connect platform</p>
+                            <div class="mt-4 text-sm text-gray-500">Effective Date: January 1, 2024 | Version 1.0</div>
+                        </div>
+
+                        <div class="prose max-w-none">
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">1. Acceptance of Terms</h2>
+                            <p class="text-gray-700 mb-6">By accessing and using The Moment Connect platform ("Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">2. Service Description</h2>
+                            <p class="text-gray-700 mb-4">The Moment Connect is a healthcare referral management platform that facilitates connections between:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li><strong>Agencies:</strong> Organizations submitting client referrals for treatment services</li>
+                                <li><strong>Facilities:</strong> Treatment centers receiving and managing referral requests</li>
+                                <li><strong>Administrators:</strong> System managers overseeing platform operations</li>
+                            </ul>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">3. User Responsibilities</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">3.1 General Obligations</h3>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li>Provide accurate and complete information</li>
+                                <li>Maintain confidentiality of login credentials</li>
+                                <li>Use the platform only for legitimate healthcare referral purposes</li>
+                                <li>Comply with all applicable laws and regulations, including HIPAA</li>
+                                <li>Report security incidents or data breaches immediately</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">3.2 Agency-Specific Responsibilities</h3>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li>Verify client consent before submitting referrals</li>
+                                <li>Provide accurate client assessment and needs information</li>
+                                <li>Maintain current licensing and certification status</li>
+                                <li>Follow up on referral outcomes as required</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">3.3 Facility-Specific Responsibilities</h3>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li>Maintain accurate bed availability and capacity information</li>
+                                <li>Respond to referrals within specified timeframes</li>
+                                <li>Provide clear admission criteria and requirements</li>
+                                <li>Update treatment outcomes and discharge information</li>
+                            </ul>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">4. Prohibited Uses</h2>
+                            <p class="text-gray-700 mb-4">You may not use the Service for:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li>Any unlawful purpose or to solicit others to perform unlawful acts</li>
+                                <li>Violating any international, federal, provincial, or state regulations, rules, laws, or local ordinances</li>
+                                <li>Infringing upon or violating our intellectual property rights or the intellectual property rights of others</li>
+                                <li>Harassing, abusing, insulting, harming, defaming, slandering, disparaging, intimidating, or discriminating</li>
+                                <li>Submitting false or misleading information</li>
+                                <li>Uploading or transmitting viruses or any other type of malicious code</li>
+                            </ul>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">5. Data Protection and Privacy</h2>
+                            <p class="text-gray-700 mb-4">The Moment Connect is committed to protecting user privacy and maintaining HIPAA compliance:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li>All protected health information (PHI) is encrypted in transit and at rest</li>
+                                <li>Access controls ensure only authorized personnel can view sensitive data</li>
+                                <li>Audit logs track all system access and data modifications</li>
+                                <li>Business Associate Agreements (BAAs) are required for all covered entities</li>
+                            </ul>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">6. Limitation of Liability</h2>
+                            <p class="text-gray-700 mb-6">The Moment Connect provides a platform for healthcare referral management but does not provide medical advice, diagnosis, or treatment. Users are responsible for all clinical decisions and patient care. Our liability is limited to the maximum extent permitted by law.</p>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">7. Service Availability</h2>
+                            <p class="text-gray-700 mb-6">While we strive for 99.9% uptime, we do not guarantee uninterrupted service. Scheduled maintenance will be announced in advance. Emergency maintenance may occur without notice.</p>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">8. Modifications to Terms</h2>
+                            <p class="text-gray-700 mb-6">We reserve the right to modify these terms at any time. Users will be notified of significant changes via email and platform notifications. Continued use of the service constitutes acceptance of modified terms.</p>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">9. Contact Information</h2>
+                            <p class="text-gray-700 mb-2">For questions about these Terms of Service, contact:</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <p class="text-gray-700"><strong>The Moment Connect Legal Team</strong></p>
+                                <p class="text-gray-700">Email: legal@momentconnect.com</p>
+                                <p class="text-gray-700">Phone: 1-800-MOMENT-1</p>
+                                <p class="text-gray-700">Address: 123 Healthcare Blvd, Suite 100, Medical City, CA 90210</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy Policy -->
+                <div id="privacy-section" class="doc-section content-fade">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <div class="border-b border-gray-200 pb-6 mb-8">
+                            <h1 class="text-3xl font-bold text-gray-900 mb-2">🔒 Privacy Policy</h1>
+                            <p class="text-gray-600">HIPAA-compliant data protection and privacy practices</p>
+                            <div class="mt-4 text-sm text-gray-500">Effective Date: January 1, 2024 | Version 1.0</div>
+                        </div>
+
+                        <div class="prose max-w-none">
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">1. Information We Collect</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">1.1 Protected Health Information (PHI)</h3>
+                            <p class="text-gray-700 mb-4">As a HIPAA-covered entity, we collect and process PHI including:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li>Client demographic information (name, date of birth, address)</li>
+                                <li>Medical history and current health status</li>
+                                <li>Treatment needs and ASAM level assessments</li>
+                                <li>Insurance information and coverage details</li>
+                                <li>Referral and placement history</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">1.2 User Account Information</h3>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li>Professional credentials and licensing information</li>
+                                <li>Organization affiliation and role</li>
+                                <li>Contact information (email, phone)</li>
+                                <li>System usage and activity logs</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">1.3 Technical Information</h3>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li>IP addresses and device identifiers</li>
+                                <li>Browser type and version</li>
+                                <li>System performance and error logs</li>
+                                <li>Security event logs</li>
+                            </ul>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">2. How We Use Information</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">2.1 Primary Uses</h3>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li><strong>Treatment Coordination:</strong> Facilitating appropriate referrals and placements</li>
+                                <li><strong>Care Management:</strong> Supporting continuity of care across providers</li>
+                                <li><strong>Quality Improvement:</strong> Analyzing outcomes to improve referral processes</li>
+                                <li><strong>Compliance:</strong> Meeting regulatory and accreditation requirements</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">2.2 Secondary Uses</h3>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li>System administration and security monitoring</li>
+                                <li>Performance analytics and reporting</li>
+                                <li>Research and development (de-identified data only)</li>
+                                <li>Legal compliance and audit purposes</li>
+                            </ul>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">3. HIPAA Compliance</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">3.1 Business Associate Agreements</h3>
+                            <p class="text-gray-700 mb-4">All covered entities using The Moment Connect must execute a Business Associate Agreement (BAA) that includes:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li>Permitted uses and disclosures of PHI</li>
+                                <li>Safeguarding requirements and security measures</li>
+                                <li>Breach notification procedures</li>
+                                <li>Individual rights and access procedures</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">3.2 Security Safeguards</h3>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li><strong>Administrative:</strong> Security officer, workforce training, access management</li>
+                                <li><strong>Physical:</strong> Secure data centers, workstation controls, media controls</li>
+                                <li><strong>Technical:</strong> Encryption, access controls, audit logs, transmission security</li>
+                            </ul>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">4. Data Sharing and Disclosure</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">4.1 Authorized Disclosures</h3>
+                            <p class="text-gray-700 mb-4">PHI may be shared with:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li>Authorized healthcare providers involved in treatment</li>
+                                <li>Insurance companies for payment purposes</li>
+                                <li>Quality assurance and accreditation organizations</li>
+                                <li>Legal authorities when required by law</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">4.2 Minimum Necessary Standard</h3>
+                            <p class="text-gray-700 mb-6">We follow the minimum necessary standard, sharing only the information required for the specific purpose of the disclosure.</p>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">5. Individual Rights</h2>
+                            <p class="text-gray-700 mb-4">Under HIPAA, individuals have the right to:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li><strong>Access:</strong> Request copies of their PHI</li>
+                                <li><strong>Amendment:</strong> Request corrections to their PHI</li>
+                                <li><strong>Restriction:</strong> Request limits on use or disclosure</li>
+                                <li><strong>Accounting:</strong> Receive a list of disclosures</li>
+                                <li><strong>Notification:</strong> Be notified of breaches affecting their PHI</li>
+                            </ul>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">6. Data Retention</h2>
+                            <p class="text-gray-700 mb-4">We retain data according to the following schedule:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li><strong>Active Referrals:</strong> Retained while case is active</li>
+                                <li><strong>Completed Referrals:</strong> 7 years from completion date</li>
+                                <li><strong>Audit Logs:</strong> 6 years minimum</li>
+                                <li><strong>User Account Data:</strong> 3 years after account closure</li>
+                            </ul>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">7. Breach Notification</h2>
+                            <p class="text-gray-700 mb-4">In the event of a data breach involving PHI:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li>Covered entities will be notified within 24 hours</li>
+                                <li>Affected individuals will be notified within 60 days</li>
+                                <li>HHS will be notified within 60 days</li>
+                                <li>Media notification if breach affects 500+ individuals in a state</li>
+                            </ul>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">8. Contact Information</h2>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <p class="text-gray-700 mb-2"><strong>Privacy Officer</strong></p>
+                                <p class="text-gray-700">Email: privacy@momentconnect.com</p>
+                                <p class="text-gray-700">Phone: 1-800-MOMENT-2</p>
+                                <p class="text-gray-700">Address: 123 Healthcare Blvd, Suite 100, Medical City, CA 90210</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Handbook -->
+                <div id="handbook-section" class="doc-section content-fade">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <div class="border-b border-gray-200 pb-6 mb-8">
+                            <h1 class="text-3xl font-bold text-gray-900 mb-2">📖 User Handbook</h1>
+                            <p class="text-gray-600">Complete system usage guide for all user roles</p>
+                            <div class="mt-4 text-sm text-gray-500">Version 1.0 | Last Updated: January 1, 2024</div>
+                        </div>
+
+                        <!-- Table of Contents -->
+                        <div class="bg-blue-50 rounded-lg p-6 mb-8">
+                            <h2 class="text-xl font-bold text-blue-900 mb-4">📑 Table of Contents</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <div class="toc-item p-2 rounded cursor-pointer text-blue-700 hover:text-blue-900" onclick="scrollToSection('getting-started')">1. Getting Started</div>
+                                    <div class="toc-item p-2 rounded cursor-pointer text-blue-700 hover:text-blue-900" onclick="scrollToSection('admin-guide')">2. Admin Dashboard Guide</div>
+                                    <div class="toc-item p-2 rounded cursor-pointer text-blue-700 hover:text-blue-900" onclick="scrollToSection('agency-guide')">3. Agency Dashboard Guide</div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="toc-item p-2 rounded cursor-pointer text-blue-700 hover:text-blue-900" onclick="scrollToSection('facility-guide')">4. Facility Dashboard Guide</div>
+                                    <div class="toc-item p-2 rounded cursor-pointer text-blue-700 hover:text-blue-900" onclick="scrollToSection('workflows')">5. Common Workflows</div>
+                                    <div class="toc-item p-2 rounded cursor-pointer text-blue-700 hover:text-blue-900" onclick="scrollToSection('troubleshooting')">6. Troubleshooting</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="prose max-w-none">
+                            <h2 id="getting-started" class="text-2xl font-bold text-gray-900 mb-4">1. Getting Started</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">1.1 System Requirements</h3>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li><strong>Browser:</strong> Chrome 90+, Firefox 88+, Safari 14+, Edge 90+</li>
+                                <li><strong>Internet:</strong> Stable broadband connection (minimum 5 Mbps)</li>
+                                <li><strong>Screen Resolution:</strong> Minimum 1024x768 (recommended 1920x1080)</li>
+                                <li><strong>JavaScript:</strong> Must be enabled</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">1.2 Account Setup</h3>
+                            <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
+                                <p class="text-green-700"><strong>Note:</strong> Account creation requires administrator approval and valid professional credentials.</p>
+                            </div>
+                            <ol class="list-decimal list-inside text-gray-700 mb-6 space-y-2">
+                                <li>Navigate to the registration page</li>
+                                <li>Select your organization type (Agency or Facility)</li>
+                                <li>Complete the registration form with accurate information</li>
+                                <li>Upload required documentation (license, certifications)</li>
+                                <li>Wait for administrator approval (typically 24-48 hours)</li>
+                                <li>Check email for login credentials and setup instructions</li>
+                            </ol>
+
+                            <h2 id="admin-guide" class="text-2xl font-bold text-gray-900 mb-4">2. Admin Dashboard Guide</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">2.1 Dashboard Overview</h3>
+                            <p class="text-gray-700 mb-4">The Admin Dashboard provides system-wide oversight and management capabilities:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li><strong>System Metrics:</strong> Real-time statistics on agencies, facilities, and referrals</li>
+                                <li><strong>User Management:</strong> Account approval, role assignment, and access control</li>
+                                <li><strong>Referral Oversight:</strong> Monitor all referral activities and intervene when necessary</li>
+                                <li><strong>Reporting:</strong> Generate compliance and performance reports</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">2.2 Key Functions</h3>
+                            <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                                <h4 class="font-semibold text-blue-900 mb-2">User Account Management</h4>
+                                <ul class="text-blue-800 text-sm space-y-1">
+                                    <li>• Review and approve new account applications</li>
+                                    <li>• Assign appropriate user roles and permissions</li>
+                                    <li>• Suspend or deactivate accounts as needed</li>
+                                    <li>• Reset passwords and manage security settings</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-green-50 p-4 rounded-lg mb-6">
+                                <h4 class="font-semibold text-green-900 mb-2">System Monitoring</h4>
+                                <ul class="text-green-800 text-sm space-y-1">
+                                    <li>• Track system performance and uptime</li>
+                                    <li>• Monitor referral processing times</li>
+                                    <li>• Identify and resolve system issues</li>
+                                    <li>• Review security logs and audit trails</li>
+                                </ul>
+                            </div>
+
+                            <h2 id="agency-guide" class="text-2xl font-bold text-gray-900 mb-4">3. Agency Dashboard Guide</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">3.1 Submitting Referrals</h3>
+                            <ol class="list-decimal list-inside text-gray-700 mb-4 space-y-2">
+                                <li><strong>Client Assessment:</strong> Complete comprehensive ASAM assessment</li>
+                                <li><strong>Documentation:</strong> Gather required medical and insurance information</li>
+                                <li><strong>Referral Form:</strong> Complete all required fields in the referral submission form</li>
+                                <li><strong>Priority Level:</strong> Assign appropriate priority (Critical, High, Standard)</li>
+                                <li><strong>Submit:</strong> Review and submit referral for processing</li>
+                            </ol>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">3.2 Tracking Referrals</h3>
+                            <p class="text-gray-700 mb-4">Monitor referral progress through these status stages:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li><strong>Submitted:</strong> Referral received and under initial review</li>
+                                <li><strong>Processing:</strong> AI matching algorithm finding suitable facilities</li>
+                                <li><strong>Matched:</strong> Potential facility matches identified</li>
+                                <li><strong>Under Review:</strong> Facility reviewing referral details</li>
+                                <li><strong>Accepted:</strong> Facility has accepted the referral</li>
+                                <li><strong>Placed:</strong> Client successfully admitted to treatment</li>
+                            </ul>
+
+                            <h2 id="facility-guide" class="text-2xl font-bold text-gray-900 mb-4">4. Facility Dashboard Guide</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">4.1 Managing Capacity</h3>
+                            <p class="text-gray-700 mb-4">Maintain accurate bed availability information:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li>Update bed counts daily or as changes occur</li>
+                                <li>Specify bed types (detox, residential, outpatient)</li>
+                                <li>Set admission criteria and restrictions</li>
+                                <li>Update insurance acceptance and payment options</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">4.2 Reviewing Referrals</h3>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
+                                <p class="text-yellow-700"><strong>Response Time:</strong> Facilities should respond to referrals within 4 hours during business hours.</p>
+                            </div>
+                            <ol class="list-decimal list-inside text-gray-700 mb-6 space-y-2">
+                                <li>Review client information and assessment details</li>
+                                <li>Verify insurance coverage and authorization</li>
+                                <li>Check bed availability for appropriate level of care</li>
+                                <li>Accept or decline referral with detailed reasoning</li>
+                                <li>If accepting, coordinate admission scheduling</li>
+                            </ol>
+
+                            <h2 id="workflows" class="text-2xl font-bold text-gray-900 mb-4">5. Common Workflows</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">5.1 Standard Referral Process</h3>
+                            <div class="bg-gray-50 p-6 rounded-lg mb-4">
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                                    <div>
+                                        <div class="font-semibold">Agency Submission</div>
+                                        <div class="text-sm text-gray-600">Complete assessment and submit referral</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                                    <div>
+                                        <div class="font-semibold">AI Matching</div>
+                                        <div class="text-sm text-gray-600">System identifies suitable facilities</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <div class="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                                    <div>
+                                        <div class="font-semibold">Facility Review</div>
+                                        <div class="text-sm text-gray-600">Facility evaluates and responds</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
+                                    <div>
+                                        <div class="font-semibold">Placement</div>
+                                        <div class="text-sm text-gray-600">Client admission and treatment begins</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2 id="troubleshooting" class="text-2xl font-bold text-gray-900 mb-4">6. Troubleshooting</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">6.1 Common Issues</h3>
+                            <div class="space-y-4 mb-6">
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <h4 class="font-semibold text-gray-900 mb-2">Login Problems</h4>
+                                    <ul class="text-gray-700 text-sm space-y-1">
+                                        <li>• Verify username and password are correct</li>
+                                        <li>• Clear browser cache and cookies</li>
+                                        <li>• Try incognito/private browsing mode</li>
+                                        <li>• Contact administrator for password reset</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <h4 class="font-semibold text-gray-900 mb-2">Slow Performance</h4>
+                                    <ul class="text-gray-700 text-sm space-y-1">
+                                        <li>• Check internet connection speed</li>
+                                        <li>• Close unnecessary browser tabs</li>
+                                        <li>• Update browser to latest version</li>
+                                        <li>• Disable browser extensions temporarily</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <h4 class="font-semibold text-gray-900 mb-2">Form Submission Errors</h4>
+                                    <ul class="text-gray-700 text-sm space-y-1">
+                                        <li>• Ensure all required fields are completed</li>
+                                        <li>• Check file upload size limits</li>
+                                        <li>• Verify data format requirements</li>
+                                        <li>• Save draft and try submitting again</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">6.2 Getting Help</h3>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <p class="text-blue-900 font-semibold mb-2">Technical Support</p>
+                                <p class="text-blue-800 text-sm mb-2">Available 24/7 for critical issues, business hours for general support</p>
+                                <ul class="text-blue-800 text-sm space-y-1">
+                                    <li>• Email: support@momentconnect.com</li>
+                                    <li>• Phone: 1-800-MOMENT-3</li>
+                                    <li>• Live Chat: Available in platform during business hours</li>
+                                    <li>• Emergency Line: 1-800-MOMENT-911 (critical system issues only)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training Documentation -->
+                <div id="training-section" class="doc-section content-fade">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <div class="border-b border-gray-200 pb-6 mb-8">
+                            <h1 class="text-3xl font-bold text-gray-900 mb-2">🎓 Training Documentation</h1>
+                            <p class="text-gray-600">Comprehensive training materials and onboarding guides</p>
+                            <div class="mt-4 text-sm text-gray-500">Version 1.0 | Last Updated: January 1, 2024</div>
+                        </div>
+
+                        <div class="prose max-w-none">
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">1. Training Overview</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">1.1 Training Objectives</h3>
+                            <p class="text-gray-700 mb-4">Upon completion of training, users will be able to:</p>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li>Navigate the platform efficiently and securely</li>
+                                <li>Perform role-specific functions with confidence</li>
+                                <li>Understand HIPAA compliance requirements</li>
+                                <li>Troubleshoot common issues independently</li>
+                                <li>Follow best practices for data security</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">1.2 Training Modules</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-blue-900 mb-2">Module 1: Platform Basics</h4>
+                                    <ul class="text-blue-800 text-sm space-y-1">
+                                        <li>• System overview and navigation</li>
+                                        <li>• Account setup and security</li>
+                                        <li>• Basic functionality tour</li>
+                                        <li>• HIPAA compliance fundamentals</li>
+                                    </ul>
+                                    <div class="mt-2 text-xs text-blue-600">Duration: 45 minutes</div>
+                                </div>
+                                
+                                <div class="bg-green-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-green-900 mb-2">Module 2: Role-Specific Training</h4>
+                                    <ul class="text-green-800 text-sm space-y-1">
+                                        <li>• Dashboard deep dive</li>
+                                        <li>• Core workflow processes</li>
+                                        <li>• Advanced features</li>
+                                        <li>• Reporting and analytics</li>
+                                    </ul>
+                                    <div class="mt-2 text-xs text-green-600">Duration: 60 minutes</div>
+                                </div>
+                                
+                                <div class="bg-purple-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-purple-900 mb-2">Module 3: Advanced Features</h4>
+                                    <ul class="text-purple-800 text-sm space-y-1">
+                                        <li>• Custom configurations</li>
+                                        <li>• Integration capabilities</li>
+                                        <li>• Automation setup</li>
+                                        <li>• Performance optimization</li>
+                                    </ul>
+                                    <div class="mt-2 text-xs text-purple-600">Duration: 30 minutes</div>
+                                </div>
+                                
+                                <div class="bg-orange-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold text-orange-900 mb-2">Module 4: Best Practices</h4>
+                                    <ul class="text-orange-800 text-sm space-y-1">
+                                        <li>• Security best practices</li>
+                                        <li>• Efficiency tips and tricks</li>
+                                        <li>• Quality assurance</li>
+                                        <li>• Continuous improvement</li>
+                                    </ul>
+                                    <div class="mt-2 text-xs text-orange-600">Duration: 30 minutes</div>
+                                </div>
+                            </div>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">2. Agency Training Program</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">2.1 Pre-Training Checklist</h3>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
+                                <p class="text-yellow-700"><strong>Before starting training, ensure you have:</strong></p>
+                                <ul class="text-yellow-800 text-sm mt-2 space-y-1">
+                                    <li>✓ Valid user account with appropriate permissions</li>
+                                    <li>✓ Completed HIPAA training certification</li>
+                                    <li>✓ Access to sample client data for practice</li>
+                                    <li>✓ Understanding of your organization's referral policies</li>
+                                </ul>
+                            </div>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">2.2 Hands-On Exercises</h3>
+                            
+                            <h4 class="text-lg font-medium text-gray-800 mb-2">Exercise 1: Creating a Referral</h4>
+                            <ol class="list-decimal list-inside text-gray-700 mb-4 space-y-2">
+                                <li>Log into your agency dashboard</li>
+                                <li>Navigate to "New Referral" section</li>
+                                <li>Complete client demographics using provided sample data</li>
+                                <li>Fill out ASAM assessment form</li>
+                                <li>Upload required documentation (use training files)</li>
+                                <li>Set priority level and special requirements</li>
+                                <li>Review and submit referral</li>
+                                <li>Track referral status through completion</li>
+                            </ol>
+
+                            <h4 class="text-lg font-medium text-gray-800 mb-2">Exercise 2: Managing Active Cases</h4>
+                            <ol class="list-decimal list-inside text-gray-700 mb-6 space-y-2">
+                                <li>Access your active referrals dashboard</li>
+                                <li>Filter referrals by status and priority</li>
+                                <li>Update case notes for an active referral</li>
+                                <li>Communicate with matched facilities</li>
+                                <li>Generate a status report for your supervisor</li>
+                            </ol>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">3. Facility Training Program</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">3.1 Capacity Management Training</h3>
+                            <p class="text-gray-700 mb-4">Learn to effectively manage and update facility capacity:</p>
+                            
+                            <h4 class="text-lg font-medium text-gray-800 mb-2">Exercise 1: Updating Bed Availability</h4>
+                            <ol class="list-decimal list-inside text-gray-700 mb-4 space-y-2">
+                                <li>Access facility dashboard capacity section</li>
+                                <li>Update current bed counts by program type</li>
+                                <li>Set admission criteria and restrictions</li>
+                                <li>Configure insurance acceptance settings</li>
+                                <li>Test real-time updates and notifications</li>
+                            </ol>
+
+                            <h4 class="text-lg font-medium text-gray-800 mb-2">Exercise 2: Referral Review Process</h4>
+                            <ol class="list-decimal list-inside text-gray-700 mb-6 space-y-2">
+                                <li>Review incoming referral notifications</li>
+                                <li>Evaluate client fit using facility criteria</li>
+                                <li>Check insurance verification and authorization</li>
+                                <li>Accept or decline referral with detailed reasoning</li>
+                                <li>Coordinate admission scheduling if accepted</li>
+                                <li>Update referral status and communicate with agency</li>
+                            </ol>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">4. Administrator Training Program</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">4.1 System Administration</h3>
+                            <p class="text-gray-700 mb-4">Comprehensive training for system administrators:</p>
+                            
+                            <h4 class="text-lg font-medium text-gray-800 mb-2">User Management</h4>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li>Review and approve new account applications</li>
+                                <li>Assign roles and configure permissions</li>
+                                <li>Monitor user activity and security compliance</li>
+                                <li>Handle account issues and password resets</li>
+                            </ul>
+
+                            <h4 class="text-lg font-medium text-gray-800 mb-2">System Monitoring</h4>
+                            <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                                <li>Monitor system performance and uptime</li>
+                                <li>Review security logs and audit trails</li>
+                                <li>Generate compliance and performance reports</li>
+                                <li>Manage system alerts and notifications</li>
+                            </ul>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">5. Certification and Assessment</h2>
+                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">5.1 Competency Assessment</h3>
+                            <p class="text-gray-700 mb-4">All users must pass a competency assessment before gaining full system access:</p>
+                            
+                            <div class="bg-green-50 p-4 rounded-lg mb-4">
+                                <h4 class="font-semibold text-green-900 mb-2">Assessment Components</h4>
+                                <ul class="text-green-800 text-sm space-y-1">
+                                    <li>• Written exam (80% passing score required)</li>
+                                    <li>• Practical demonstration of key functions</li>
+                                    <li>• HIPAA compliance verification</li>
+                                    <li>• Security best practices review</li>
+                                </ul>
+                            </div>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">5.2 Ongoing Education</h3>
+                            <ul class="list-disc list-inside text-gray-700 mb-4 space-y-2">
+                                <li><strong>Quarterly Updates:</strong> New feature training and system updates</li>
+                                <li><strong>Annual Recertification:</strong> Comprehensive review and assessment</li>
+                                <li><strong>Webinar Series:</strong> Monthly best practices and tips sessions</li>
+                                <li><strong>User Forums:</strong> Peer-to-peer learning and support</li>
+                            </ul>
+
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">5.3 Training Resources</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <h4 class="font-semibold text-gray-900 mb-2">📹 Video Tutorials</h4>
+                                    <p class="text-gray-700 text-sm">Step-by-step video guides for all major functions</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <h4 class="font-semibold text-gray-900 mb-2">📚 Knowledge Base</h4>
+                                    <p class="text-gray-700 text-sm">Searchable articles and FAQs</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <h4 class="font-semibold text-gray-900 mb-2">🎯 Interactive Simulations</h4>
+                                    <p class="text-gray-700 text-sm">Practice environment with sample data</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <h4 class="font-semibold text-gray-900 mb-2">👥 Live Training Sessions</h4>
+                                    <p class="text-gray-700 text-sm">Instructor-led group and individual sessions</p>
+                                </div>
+                            </div>
+
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">6. Support and Continued Learning</h2>
+                            
+                            <div class="bg-blue-50 p-6 rounded-lg">
+                                <h3 class="text-xl font-semibold text-blue-900 mb-4">Training Support Contacts</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <p class="font-semibold text-blue-800">Training Coordinator</p>
+                                        <p class="text-blue-700 text-sm">Email: training@momentconnect.com</p>
+                                        <p class="text-blue-700 text-sm">Phone: 1-800-MOMENT-4</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-blue-800">Technical Training Support</p>
+                                        <p class="text-blue-700 text-sm">Email: techtraining@momentconnect.com</p>
+                                        <p class="text-blue-700 text-sm">Phone: 1-800-MOMENT-5</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 'terms';
+
+        // Set current date
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString();
+
+        function showSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.doc-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            // Show selected section
+            document.getElementById(`${section}-section`).classList.add('active');
+            event.target.closest('.nav-item').classList.add('active');
+            
+            currentSection = section;
+            
+            // Scroll to top of content
+            document.getElementById(`${section}-section`).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function searchContent() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const sections = document.querySelectorAll('.doc-section');
+            
+            if (searchTerm === '') {
+                // Reset to current section if search is cleared
+                showSection(currentSection);
+                return;
+            }
+
+            let found = false;
+            sections.forEach(section => {
+                const content = section.textContent.toLowerCase();
+                if (content.includes(searchTerm)) {
+                    if (!found) {
+                        // Show first matching section
+                        const sectionId = section.id.replace('-section', '');
+                        showSection(sectionId);
+                        found = true;
+                    }
+                }
+            });
+
+            if (!found) {
+                alert('No results found for: ' + searchTerm);
+            }
+        }
+
+        // Add smooth scrolling for table of contents
+        document.querySelectorAll('.toc-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const targetId = this.getAttribute('onclick').match(/'([^']+)'/)[1];
+                scrollToSection(targetId);
+            });
+        });
+
+        // Initialize with terms section
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('terms');
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989a981f63702cba',t:'MTc1OTY0MjkzMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
